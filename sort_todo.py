@@ -22,14 +22,14 @@ def sort_tasks(tasks, char): # char is either @ or +
       if w.startswith(char) and len(w) != 1:
         proj_or_context_list.append(w)
     
-    special_proj_or_context_list = tuple(filter(lambda x: x.startswith('+_'), proj_or_context_list))
-    if special_proj_or_context_list != ():
+    special_proj_list = tuple(filter(lambda x: x.startswith('+_'), proj_or_context_list))
+    if special_proj_list != ():
       if "+_done" in proj_or_context_list:
         proj_or_context = "+_done"
       elif "+_failed" in proj_or_context_list:
         proj_or_context = "+_failed"
       else:
-        proj_or_context = special_proj_or_context_list[0]
+        proj_or_context = special_proj_list[0]
     else:
       proj_or_context = '' if proj_or_context_list == [] else proj_or_context_list[0]
 
