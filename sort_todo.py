@@ -1,4 +1,7 @@
 from pprint import pprint
+from os import getcwd
+
+print(getcwd())
 
 with open('todo.txt', 'r') as f:
   tasks = f.readlines()
@@ -13,17 +16,22 @@ with open('done.txt', 'a') as f:
 def sort_tasks(tasks, char): # char is either @ or +
   sorted_tasks = {}
   for t in tasks:
-    # proj_or_context = ""
     proj_or_context_list = []
     words = t.split()
     for w in words:
       if w.startswith(char) and len(w) != 1:
-        proj_or_context.append(w)
-        # if proj_or_context.startswith("+_"):
-        #   break
-    #if proj_or_context == "" and char == "+":
-    #  t = t.rstrip() + " +main\n"
-    #  proj_or_context = "+main"
+        proj_or_context_list.append(w)
+    
+    special_proj_or_context_list = tuple(filter(lambda x: x.startswith('+_'), proj_or_context_list))
+    if special_proj_or_context_list != ():
+      if "+_done" in proj_or_context_list:
+        proj_or_context = "+_done"
+      elif "+_failed" in proj_or_context_list:
+        proj_or_context = "+_failed"
+      else:
+        proj_or_context = special_proj_or_context_list[0]
+    else:
+      proj_or_context = '' if proj_or_context_list == [] else proj_or_context_list[0]
 
     if proj_or_context not in sorted_tasks:
       sorted_tasks[proj_or_context] = []
