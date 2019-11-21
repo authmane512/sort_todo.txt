@@ -77,10 +77,12 @@ for proj in project_names:
 
 new_file = ""
 for proj in project_names:
+  title = proj.upper().replace('+', '')
+  offset = (79 - len(title))*' '
   new_file += """
-x ================================================================================
-x = {}
-x ================================================================================\n""".format(proj.upper().replace('+', ''))
+x ================================================================================ +bar
+x = {}{}+bar
+x ================================================================================ +bar\n""".format(title, offset)
 
   contexts = sorted(full_sorted[proj].keys())
   for c in contexts:
